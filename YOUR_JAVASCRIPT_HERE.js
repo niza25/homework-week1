@@ -33,3 +33,21 @@ function equipWeapon(whomEquip) {
     console.log(whomEquip.weapon);
 };
 
+// showing you what I have
+
+function displayStats(object){
+    const statsDisplay = document.createElement('p');
+    const imgContainer = document.getElementById('imgContainer');
+    statsDisplay.setAttribute('id', 'statsDisplay');
+    statsDisplay.innerText = `${object.name} has ${object.health} health and currently carries ${object.weapon.type} with ${object.weapon.damage} damage.`;
+    imgContainer.appendChild(statsDisplay);
+}
+
+
+function changeName(object){
+    event.preventDefault();
+    const inputField = document.getElementById('name');
+    const newName = inputField.value;
+    object.name = newName;
+    displayStats(object);
+}
