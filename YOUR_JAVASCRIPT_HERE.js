@@ -1,6 +1,6 @@
-// Write your JS here
+// my js
 let hero = {
-    name: 'Superman',
+    name: 'Superwoman',
     heroic: true,
     inventory: [],
     health: 10,
@@ -11,9 +11,18 @@ let hero = {
 };
 
 let hero2 = {
-    name: 'Superwoman',
+    name: 'Hancock',
     heroic: true,
-    inventory: [],
+    inventory: [
+        {
+            type: 'bazooka',
+            damage: 5
+        },
+        {
+            type: 'racket',
+            damage: 4
+        },
+    ],
     health: 10,
     weapon: {
         type: 'pistol',
@@ -27,28 +36,23 @@ const dagger = {
 };
 
 const changeNameForm = document.getElementById('changeNameForm');
-const container = document.getElementById('container');
-const statsDisplay = document.getElementById('statsDisplay');
+const textDisplay = document.getElementById('textDisplay');
+const imgFight = document.getElementById('fight');
+let imgDagger = document.getElementById('dagger');
 let currentHero = hero;
-
-function switchHero(){
-    if(currentHero === hero){
-        currentHero = hero2;
-    } else {
-        currentHero = hero;
-    }
-    displayStats(currentHero);
-}
 
 function rest(object) {
     object.health = 10;
-    statsDisplay.innerHTML = `${object.name} rested and has ${object.health} health again.`;
+    textDisplay.innerHTML = `${object.name} has rested and has ${object.health} health again.`;
+    showStats(currentHero);
     return object;
 };
 
 function pickUpItem(whoPicks, pickedWeapon) {
     whoPicks.inventory.push(pickedWeapon);
-    statsDisplay.innerHTML = `${whoPicks.name} gained ${pickedWeapon.type} with ${pickedWeapon.damage} damage.`;
+    textDisplay.innerHTML = `${whoPicks.name} gained ${pickedWeapon.type} with ${pickedWeapon.damage} damage.`;
+    toggleDisplay(imgDagger);
+    showStats(currentHero);
 };
 
 function equipWeapon(whomEquip) {
@@ -56,39 +60,65 @@ function equipWeapon(whomEquip) {
         let newWeapon = whomEquip.inventory.shift();
         whomEquip.weapon = newWeapon;
     };
-    statsDisplay.innerHTML = `${whomEquip.name} is now equipped with ${whomEquip.weapon.type}.`;
+    showStats(currentHero);
+    textDisplay.innerHTML = `${whomEquip.name} is now equipped with ${whomEquip.weapon.type}.`;
 };
 
-// this is what I got
+// bonus
 
-function displayStats(object) {
-    statsDisplay.innerText = `${object.name} has ${object.health} health and currently carries ${object.weapon.type} with ${object.weapon.damage} damage.`;
-    console.log(statsDisplay);
+function showStats(object) {
+    let heroName = document.getElementById('heroName');
+    let heroHealth = document.getElementById('heroHealth');
+    let currentWeapon = document.getElementById('currentWeapon');
+    heroName.innerHTML = `Hero's name: ${object.name}`;
+    heroHealth.innerHTML = `${object.name}'s health: ${object.health}`;
+    currentWeapon.innerHTML = `${object.name}'s current weapon: ${object.weapon.type}`;
 }
 
-function toggleFormDisplay() {
-    let computedStyle = window.getComputedStyle(changeNameForm);
-    if (computedStyle.display === "none") {
-        changeNameForm.style.display = "block";
+function switchHero() {
+    if (currentHero === hero) {
+        currentHero = hero2;
     } else {
-        changeNameForm.style.display = "none";
+        currentHero = hero;
     }
+    imgDagger.style.display = 'block';
+    imgFight.style.display = 'block';
+    showStats(currentHero);
 }
 
 function changeName(object) {
     event.preventDefault();
     const inputField = document.getElementById('name');
     const newName = inputField.value;
-    object.name = newName;
-    displayStats(object);
-    inputField.value = null;
-    toggleFormDisplay();
+    if (!newName) {
+        alert('Type your new name');
+    } else {
+        object.name = newName;
+        inputField.value = null;
+        toggleDisplay(changeNameForm);
+        showStats(currentHero);
+    }
 }
 
-function fightsEnemy(whoFights){
-    let damage = Math.floor((Math.random() *10));
+function fightsEnemy(whoFights) {
+    let damage = Math.floor((Math.random() * 10));
     whoFights.health = whoFights.health - damage;
-    console.log(hero.health);
-    statsDisplay.innerText = `What a fight! ${whoFights.name} lost ${damage} health points!`;
+    if (whoFights.health <= 0) {
+        textDisplay.innerText = `What a fight! Unfortunately ${whoFights.name} lost ${damage} and is dead.`;
+    } else {
+        textDisplay.innerText = `What a fight! ${whoFights.name} lost ${damage} health points!`;
+    }
+    toggleDisplay(imgFight);
+    showStats(currentHero);
 }
 
+function toggleDisplay(object) {
+    let computedStyle = window.getComputedStyle(object);
+    if (computedStyle.display === "block") {
+        object.style.display = "none";
+    } else {
+        object.style.display = "block";
+    }
+}
+
+showStats(currentHero);

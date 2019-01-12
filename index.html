@@ -1,30 +1,45 @@
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Mocha Tests</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="https://fonts.googleapis.com/css?family=Spicy+Rice" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
 </head>
+
 <body>
-
-
-  <!-- YOUR HTML HERE -->
   <div id="container">
+    <h2>Wanna play?</h2>
+    <p>
+      click the dagger to put it in your bag &#9827 use you newest weapon from the bag &#9827 click the cocks to fight
+      an enemy &#9827 click the sleepy fox to restore health
+    </p>
+    <div id="showStats">
+      <ul>
+        <li id="heroName"></li>
+        <li id="heroHealth"></li>
+        <li id="currentWeapon"></li>
+      </ul>
+    </div>
     <div class="imgContainer">
-        <img id="inn" onclick="rest(currentHero)" src="https://pixabay.com/get/e835b90a28f2023ed1584d05fb1d4e97e07ee3d21cac104491f7c37ea3e5b3be_340.jpg" alt="vegetables">
-        <img id="dagger" onclick="pickUpItem(currentHero, dagger)" src="https://pixabay.com/get/ea35b20b2cf1003ed1584d05fb1d4e97e07ee3d21cac104491f7c37ea2efb3b9_340.png" alt="dagger">
-        <img id="bag" onclick="equipWeapon(currentHero)" src="https://farm4.staticflickr.com/3930/15368462518_faeaa7b74e.jpg" alt="bag">
-        <img id="fight" onclick="fightsEnemy(currentHero)" src="https://farm5.staticflickr.com/4014/4586885545_110879af84.jpg" alt="cock's fight">
+      <img id="inn" onclick="rest(currentHero)" src="https://pixabay.com/get/e033b6092df31c22d2524518b7444795ea76e5d004b0144592f2c67dafe9bc_340.jpg"
+        alt="sleepy fox">
+      <img id="dagger" onclick="pickUpItem(currentHero, dagger)" src="https://pixabay.com/get/ea35b20b2cf1003ed1584d05fb1d4e97e07ee3d21cac104491f7c37ea2efb3b9_340.png"
+        alt="dagger">
+      <img id="bag" onclick="equipWeapon(currentHero)" src="https://farm4.staticflickr.com/3930/15368462518_faeaa7b74e.jpg"
+        alt="bag">
+      <img id="fight" onclick="fightsEnemy(currentHero)" src="https://farm5.staticflickr.com/4014/4586885545_110879af84.jpg"
+        alt="cock's fight">
     </div>
     <button onclick="switchHero()">Change the player</button>
-    <button onclick="displayStats(currentHero)">Display stats</button>
-    <button onclick="toggleFormDisplay()">Change name</button>
+    <button onclick="toggleDisplay(changeNameForm)">Change hero's name</button>
     <form onsubmit="changeName(currentHero)" id="changeNameForm">
       <label for="name">Your hero's new name:</label>
       <input type="text" id="name">
-      <button>Change name</button>
+      <button id="submit">Change name</button>
     </form>
-    <p id="statsDisplay">Welcome to the game!</p>
+    <p id="textDisplay"></p>
   </div>
 
   <!-- I RECOMMEND YOU LEAVE THE REST UNTOUCHED -->
@@ -39,4 +54,5 @@
   <script src="game_logic.test.js"></script>
 
 </body>
+
 </html>
